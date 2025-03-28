@@ -1,0 +1,5 @@
+ delfin ferrante    25  1234    77
+ delfin ferrante    24  1234    77
+   ana bombini    73    66    89
+  luis fernandez    78   123    54
+ martin rodriguez    29     0    11
