@@ -1,0 +1,12 @@
+1 55.0 fermin
+1 60.0 fermin
+1 150.0 fermin
+1 987.0 fermin
+2 56.0 delfina
+2 156.0 delfina
+2 250.0 delfina
+2 36.0 delfina
+3 90.0 tomas
+3 45.0 tomas
+3 150.0 tomas
+3 142.0 tomas
