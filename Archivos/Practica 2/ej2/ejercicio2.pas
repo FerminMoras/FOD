@@ -43,6 +43,7 @@ type
 		end;
 		writeln('archivo binario detalle creado con exito');
 		close(det);
+		close(cargaD);
 		
 		assign(cargaM, 'maestro.txt');
 		assign(mae, 'maestro.dat');
@@ -54,6 +55,7 @@ type
 		end;
 		writeln('archivo binario maestro creado con exito');
 		close(mae);
+		close(cargaM);
 	end;
 	
 	procedure actualizarMaestro(var mae: arMaestro; var det: arDetalle);
