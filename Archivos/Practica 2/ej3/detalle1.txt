@@ -1,0 +1,20 @@
+101 320 350 Buenos Aires
+102 400 420 Buenos Aires
+201 290 300 Catamarca
+301 315 330 Chaco
+302 310 320 Chaco
+401 280 300 Cordoba
+402 310 320 Cordoba
+501 260 280 Entre Rios
+601 250 270 Jujuy
+602 240 260 Jujuy
+701 330 350 Mendoza
+702 310 330 Mendoza
+801 300 320 Rio Negro
+802 295 310 Rio Negro
+901 310 320 Salta
+902 300 310 Salta
+1001 285 300 San Juan
+1101 280 300 Santa Cruz
+1201 310 320 Santa Fe
+1202 320 330 Santa Fe
