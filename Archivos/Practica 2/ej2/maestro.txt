@@ -1,0 +1,5 @@
+1 120.0 10 5 escobillon
+5 500.0 20 5 trapo
+7 78.0 15 5 raid
+12 278.0 7 5 baldes 
+23 689.0 25 5 franela
