@@ -103,11 +103,9 @@ type
 		while(min.nombre <> valorAlto) do begin
 			writeln('entra al 1er while');
 			read(maestro,i);
-			while(min.nombre <> i.nombre) do begin
-				writeln('entra al 2do while');
-				read(maestro,i);
-			end;		
-			while(min.nombre = i.nombre) do begin
+			while (i.nombre <> min.nombre) do 
+				read(maestro,i);		
+			while (i.nombre = min.nombre) do begin
 				writeln('entra al 3er while');
 				i.cantPer:= i.cantPer + min.cantPer;
 				i.total:= i.total + min.total;
