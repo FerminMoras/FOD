@@ -44,6 +44,25 @@ type
 			leer(vDetalle[pos], vRegistro[pos]);
 	end;
 	
+	procedure reporte(var mae: maestro);
+	var
+		t: text;
+		nombre: string;
+		regm: productos;
+	begin
+		writeln('Ingrese el nombre del archivo de texto a crear');
+		readln(nombre);
+		assign(t,nombre);
+		reset(mae);
+		while(not eof(mae)) do begin
+			read(mae,regm);
+			if(regm.stockAct < regm.stockMin) then
+				writeln(t, nombre, ' ', descripcion, ' ', stockAct, ' ', precio);
+		end;
+		close(t);
+		close(mae);
+	end;			
+	
 	procedure unDetalle(var det: detalle);
 	var
 		t: text;
@@ -90,19 +109,41 @@ type
 		writeln('El archivo maestro fue creado con exito');	
 	end;
 	
-	procedure actualizarMaestro(var mae: maestro; var vDet: vDetalles);	
+	procedure actualizarMaestro(var mae: maestro; var vDet: vecDetalles);	
 	var
 		vReg: vecRegistros;
 		i: integer;
-		regm: productos;
+		regm: productos;4
 		min: regDetalle;
 		cant, aux: integer;
 	begin
-	
+		for i:= 1 to 3 do begin
+			reset(vDet[i]);
+			leer(vDet[i],vReg[i]);
+		end;
+		minimo(vDet,vReg,min);
+		while(min.cod <> valorAlto) do begin
+			cant:= 0;
+			codAct:= min.cod;
+			while(min.cod <> valorAlto) and (min.cod = codAct) do begin
+				cant:= cant + min.cantV;
+				minimo(vDet,vReg,min);
+			end;
+			read(mae,regm);
+			while(regm.cod <> codAct) do begin
+				read(mae,regm);
+			end;
+			seek(mae,filepos(mae)-1);
+			regm.stockAct:= regm.stockAct - cant;
+			write(mae,regm);
+		end;
+		reporte(mae);
+		close(mae);
+		for i:= 1 to 3 do
+			close(v[i]);
 	end;
 	
-	
-	procedure crearDetalles(var v: vDetalles);
+	procedure crearDetalles(var v: vecDetalles);
 	var
 		i: integer;
 	begin
@@ -113,7 +154,10 @@ type
 	end;	
 	
 	var
-	
+		mae: maestro;
+		vec: vecDetalles;
 	begin
-	
+		crearMaestro(mae);
+		crearDetalles(vec);
+		actualizarMaestro(mae,vec);
 	end.	
