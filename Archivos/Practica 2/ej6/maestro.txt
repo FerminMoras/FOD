@@ -1,0 +1,19 @@
+101 1 120 80 10 300 La Plata
+Variante Cepa1
+101 1 120 80 10 300 La Plata
+Variante Cepa1
+101 3 140 100 15 350 La Plata
+Variante Cepa3
+102 2 95 60 5 200 9 de Julio
+Variante Cepa2
+102 2 95 60 5 200 9 de Julio
+Variante Cepa2
+102 3 95 60 5 200 9 de Julio
+Variante Cepa3
+103 3 140 100 15 350 Casares
+Variante Cepa3
+103 3 140 100 15 350 Casares
+Variante Cepa3
+103 1 140 100 15 350 Casares
+Variante Cepa1
+
