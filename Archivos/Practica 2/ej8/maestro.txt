@@ -1,0 +1,5 @@
+1 1245 10000.0 buenos aires
+2 678 2000.0 misiones
+3 7893 15000.0 cordoba
+4 400 500.0 tucuman
+5 100 300.0 tierra del fuego

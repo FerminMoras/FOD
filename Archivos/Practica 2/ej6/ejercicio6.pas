@@ -52,6 +52,7 @@ type
 		if(codAlto <> min.codigoLoc) then
 			leer(vD[pos],vR[pos]);
 		end;	
+		writeln('minimo: ', min.codigoLoc);
 	end;	
 	
 	procedure unDetalle(var det: detalle);
@@ -140,6 +141,7 @@ type
 		end;
 		minimo(vD,vR,min);
 		writeln('salgo del minimo');
+		writeln('minimo: ', min.codigoLoc);
 		while(min.codigoLoc <> codAlto) do begin
 			writeln('entra primer while');
 			cantLocalidad:= 0;
