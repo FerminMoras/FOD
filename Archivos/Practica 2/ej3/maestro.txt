@@ -1,0 +1,20 @@
+4800 4950 Buenos Aires
+2600 2800 Catamarca
+3100 3300 Chaco
+2900 3100 Chubut
+4700 4900 Córdoba
+3000 3200 Corrientes
+3500 3700 Entre Ríos
+2700 2900 Formosa
+3000 3200 Jujuy
+3200 3400 La Pampa
+2800 3000 La Rioja
+4600 4800 Mendoza
+3300 3500 Misiones
+3100 3300 Neuquén
+3400 3600 Río Negro
+4400 4600 Salta
+3600 3800 San Juan
+2900 3100 San Luis
+2700 2900 Santa Cruz
+4800 4950 Santa Fe

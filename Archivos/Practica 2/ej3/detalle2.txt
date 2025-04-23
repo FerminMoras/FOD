@@ -1,0 +1,20 @@
+103 350 370 Buenos Aires
+104 360 380 Buenos Aires
+202 295 310 Catamarca
+303 305 320 Chaco
+403 290 310 Córdoba
+404 300 320 Córdoba
+502 270 290 Entre Ríos
+602 255 270 Jujuy
+703 315 330 Mendoza
+803 310 325 Río Negro
+804 305 320 Río Negro
+903 310 320 Salta
+1002 280 295 San Juan
+1102 275 290 Santa Cruz
+1203 300 310 Santa Fe
+1204 310 320 Santa Fe
+1301 290 310 Tucumán
+1302 300 320 Tucumán
+1401 270 290 Tucumán
+1402 260 280 Tucumán
