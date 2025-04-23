@@ -1,5 +1,6 @@
 program ejercicio10;
-
+const
+	codAlto = 9999;
 type
 	regMaestro = record
 		codProv: integer;
@@ -9,6 +10,14 @@ type
 	end;
 	
 	maestro = file of regMaestro;
+	
+	procedure leer(var mae:maestro; var regm: regMaestro);
+	begin
+		if(not (eof(mae))) then
+			read(mae,regm)
+		else
+			regm.codProv:= codAlto;
+	end;		
 	
 	procedure crearMaestro(var mae: maestro);
 	var
@@ -41,21 +50,38 @@ type
 		regm: regMaestro;
 		totalProv: integer;
 		totalGral: integer;
+		totalLoc: integer;
 		locAct: integer;
-		codAct: integer;
+		provAct: integer;
 	begin
 		reset(mae);
 		totalGral:= 0;
-		while(not eof(mae)) do begin
+		leer(mae,regm);
+		while(regm.codProv <> codAlto) do begin
 			totalProv:= 0;
-			while(regm.codProv = provAct) and (regm.codLoc = locAct) do begin
-				totalProv:= totalProv + cantV;
-				writeln('Codigo de provincia: ',codProv);
-				writeln('Codigo de Localidad: ',codLoc, '      ', 'Total de votos: ', );
-				
-	end;		
+			writeln('Codigo de Provincia: ', regm.codProv);
+			provAct:= regm.codProv;
+			while(regm.codProv = provAct) do begin
+				locAct:= regm.codLoc;
+				writeln('Codigo de Localidad: ', '             ' ,'Total de votos: ');
+				totalLoc:= 0;
+				while (regm.codProv = provAct) and (regm.codLoc = locAct) do begin
+					totalLoc:= totalLoc + regm.cantV;
+					leer(mae,regm)
+				end;
+				writeln(locAct,'                                ', totalLoc);
+				totalProv:= totalProv + totalLoc;	
+			end;
+			writeln('Total votos provicia: ', totalProv);
+			totalGral:= totalGral + totalProv;
+		end;
+		writeln('Total general votos: ', totalGral);			
+		close(mae);
+	end;
+						
 var
-
+	mae: maestro;
 begin
-
+	crearMaestro(mae);
+	informarVotos(mae);
 end.
