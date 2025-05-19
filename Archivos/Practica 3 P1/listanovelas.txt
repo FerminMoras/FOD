@@ -1,0 +1,30 @@
+Nombre: 
+Género: 
+Director: 
+Duración: 
+Código: -4
+Precio: 0.00
+Nombre: el papo
+Género: terror
+Director: moras
+Duración: 3 temporadas
+Código: 10
+Precio: 500.00
+Nombre: la tesis
+Género: depresion
+Director: ferrante
+Duración: 4 temporadas
+Código: 5
+Precio: 1000.00
+Nombre: el jardin
+Género: paisajismo
+Director: bombini
+Duración: 2 temporadas
+Código: 3
+Precio: 300.00
+Nombre: wanchope abila
+Género: comedia
+Director: urteneche
+Duración: 6 temporadas
+Código: 4
+Precio: 800.00
