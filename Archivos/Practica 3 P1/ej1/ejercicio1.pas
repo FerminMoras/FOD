@@ -112,7 +112,7 @@ type
 			seek(arc,PosActual);
 			write(arc,ultimo);
 			
-			seek(arc, FilePos(arc)-1)M
+			seek(arc, FilePos(arc)-1);
 			Trucante(arc);	
 		end;
 var

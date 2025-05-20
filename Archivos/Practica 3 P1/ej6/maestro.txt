@@ -1,0 +1,21 @@
+4 5 500.0 buzo canguro
+rojo
+buzo
+7 10 1000.0 pantalon mom
+negro
+pantalon
+9 11 700.0 remera oversize
+blanca
+remera
+11 6 600.0 gorra
+azul
+gorra
+20 8 2300.0 zapatillas chunky
+verde
+zapatillas
+18 3 1300.0 campera jean
+gris
+campera
+2 12 900.0 bombacha de campo
+marron
+pantalon

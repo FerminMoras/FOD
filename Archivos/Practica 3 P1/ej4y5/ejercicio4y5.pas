@@ -1,12 +1,12 @@
-program ejercicio4y5.pas
+program ejercicio4y5.pas;
 type
-	reg_flor = record ​ ​
-		nombre: String[45];
+	reg_flor = record
+		nombre: string[45];
 		codigo: integer;
 	end;
 	
 	tArchFlores = file of reg_flor;
-	
+		
 	procedure leerFlor(var f:reg_flor);
 	begin
 		writeln('ingrese el codigo');
@@ -65,7 +65,6 @@ type
 	procedure baja(var arc: tArchFlores; flor: reg_flor);
 	var
 		f,aux: reg_flor;
-		cod: integer;
 		ok: boolean;
 	begin
 		reset(arc);
@@ -87,12 +86,43 @@ type
 			writeln('baja realizada con exito')
 		else		
 			writeln('no se encontro la flor');
-	end;		
+	end;
+	
+	procedure imprimirArc(var arc: tArchFlores);
+	var
+		f:reg_flor;
+	begin
+		reset(arc);
+		seek(arc,1);
+		while(not eof(arc)) do begin
+			read(arc,f);
+			if (f.codigo > 0) then
+				writeln('Nombre:', f.nombre, ' Codigo: ', f.codigo);
+		end;
+		close(arc);			
+	end;	
 var
 	arc: tArchFlores;
 	flor: reg_flor;
 	nombre: string;
 	codigo: integer;
 begin
-
+	crearArchivo(arc);
+	writeln('<-----ALTA----->');
+	writeln('ingrese el nombre de la flor para realizar el alta');
+	readln(nombre);
+	writeln('ingrese el codigo de la flor para realizar el alta');
+	readln(codigo);
+	alta(arc,nombre,codigo);
+	writeln('<-----BAJA----->');
+	writeln('ingrese el nombre de la flor para realizar la baja');
+	readln(nombre);
+	writeln('ingrese el codigo de la flor para realizar la baja');
+	readln(codigo);
+	flor.nombre:= nombre;
+	flor.codigo:= codigo;
+	baja(arc,flor);
+	writeln();
+	writeln('<-------CONTENIDO DEL ARCHIVO------->');
+	imprimirArc(arc);	
 end.
