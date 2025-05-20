@@ -66,12 +66,12 @@ type
 			write(arc,n);
 		end
 		else begin
-			seek(arc, aux.codigo * -1);
-			read(arc,aux);
-			seek(arc, filepos(arc)-1);
-			write(arc,n);
-			seek(arc,0);
-			write(arc,aux);
+			seek(arc, aux.codigo * -1); //se posiciona en la posicion que indica el reg cabecera.
+			read(arc,aux); //lee esa posicion y la guarda en el reg auxiliar.
+			seek(arc, filepos(arc)-1); //se posiciona en la pos donde leiste el reg aux, ya q al hacer read se mueve 1 lugar.
+			write(arc,n); //escribe ahi el nuevo dato que se queria agregar.
+			seek(arc,0); //vuelve al reg cabecera.
+			write(arc,aux); //escribe la siguiente pos libre a utilizar.
 		end;
 		close(arc);	
 	end;

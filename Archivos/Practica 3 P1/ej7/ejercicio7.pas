@@ -10,7 +10,7 @@ type
 		zona: string;
 	end;
 	
-	maestro = file of aves;
+	maestro = file of ave;
 	
 	procedure leerAve(var a: ave);
 	begin
@@ -46,8 +46,7 @@ type
 	procedure bajaLogica(var mae: maestro);
 	var
 		cod: integer;
-		a,ultimo: ave;
-		posActual: integer;
+		a: ave;
 	begin
 		reset(mae);
 		writeln('ingrese el codigo del ave que desea eliminar');
@@ -55,7 +54,7 @@ type
 		while(not eof(mae)) do begin
 			read(mae,a);
 			if(a.codigo = cod) then begin
-				seek(filepos(mae)-1);
+				seek(mae,filepos(mae)-1);
 				a.codigo:= -1;
 				write(mae,a);
 			end;
@@ -67,30 +66,29 @@ type
 	var
 		a,ultimo: ave;
 		ok: boolean;
-		posActual: integer
+		posActual: integer;
 	begin
 		reset(mae);
 		ok:= false;
 		while (not eof(mae)) do begin
-			posActual:= filepos(arc);
+			posActual:= filepos(mae);
 			read(mae,a);
 			if(a.codigo <= 0) and (not ok) then
 				ok:= true;
 		end;
-		
 		if(ok) then begin
 			seek(mae, filepos(mae)-1);
 			read(mae,ultimo);
 			seek(mae,posActual);
 			write(mae,ultimo);
-			seek(arc, filepos(arc)-1)
-			Trucante(arc);
+			seek(mae, filepos(mae)-1);
+			truncate(mae);
 		end;
 		close(mae);
 		writeln('archivo truncado con exito');
 	end;
 	
-	procedure leer(var mae: maestro, a: ave);
+	procedure leer(var mae: maestro; var a: ave);
 	begin
 		if(not eof(mae)) then
 			read(mae,a)
@@ -107,12 +105,35 @@ type
 		leer(mae,a);
 		while (a.codigo <> valorAlto) do begin
 			if(a.codigo < 0 ) then begin
-				pos:= (filepos(mae)-1);
-				seek(mae,filesize(mae)-1);
-				read(mae,a);
-				if()
+				pos:= (filepos(mae)-1); //me guardo la posicion del primer archivo borrado que encontre
+				seek(mae,filesize(mae)-1); // me posiciono en el ultimo registro del archivo.
+				read(mae,a); //leo la ultima pos del registro
+				if (filepos(mae)-1 <> 0) then begin //si la posicion actual del registro es distinta de 0, es decir, si no llegue al principio.
+					while(a.codigo < 0) do begin
+						seek(mae, filesize(mae)-1); //me posiciono en el ultimo registro del archivo.
+						truncate(mae); // lo elimino
+						seek(mae, filesize(mae)-1); //me posiciono en el nuevo ultimo registro del archivo.
+						read(mae,a); //leo el nuevo ultimo registro.
+					end;
+				end;
+				seek(mae,pos); //me posiciono en la primera posicion que encontre un registro borrado.
+				write(mae,a); //sobrescribo ese registro con el ultimo valido leido.
+				seek(mae, filesize(mae)-1); //me posiciono en el ultimo registro del archivo.
+				truncate(mae); //elimino la ultima pos(ya copiada, para evitar duplicados).
+				seek(mae,pos); //vuelvo a la posicion en la que estaba.
+			end;
+			leer(mae,a);
+		end;
+		close(mae);
+		writeln('se compacto el archivo con exito');
+	end;					
 var
-	
+	mae: maestro;
 begin
-
+	crearMaestro(mae);
+	//realizamos dos bajas	
+	bajaLogica(mae);
+	bajaLogica(mae);
+	//compactamos el archivo
+	compactarArchivoCompleto(mae);
 end.
