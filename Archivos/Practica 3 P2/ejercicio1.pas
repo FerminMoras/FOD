@@ -1,6 +1,4 @@
 program ejercicio1;
-const
-	valorAlto: 9999;
 type
 	productos = record
 		codigo: integer;
@@ -16,15 +14,7 @@ type
 	end;
 	
 	maestro = file of productos;
-	detalle = file of ventas;
-	
-	procedure leer(var det: detalle; var v:ventas);
-	begin
-		if(not eof(det)) then
-			read(det,v)
-		else
-			v.codigo:= valorAlto;
-	end;	
+	detalle = file of ventas;	
 	
 	procedure crearMaestro(var mae: maestro);
 	var
@@ -68,44 +58,43 @@ type
 		writeln('archivo detalle creado con exito');	
 	end;
 	
-	procedure actualizarMaestroIncisoB(var mae: maestro; var det: detalle);
-	var
-	
-	begin
-	
-	end;
-	
-	
-	//en el punto B al no repetirse los archivos detalles no es necesario agrupar las ventas de un mismo codigo
-	//directamente leemos el detalle y actualizamos el maestro, porque sabemos q no vamos a volver a encontrar
-	//ese codigo.
-	procedure actualizarMaestroIncisoB(var mae: maestro; var det: detalle);
+	//PREGUNTAR POR ESTA RESOLUCION.
+	procedure actualizarMaestroIncisoA(var mae:maestro; var det:detalle);
 	var
 		p:productos;
 		v:ventas;
+		totalV: integer;
 	begin
 		reset(mae);
 		reset(det);
-		leer(det,v);
-		while(v.codigo <> valorAlto) do begin
-			reset(mae);
+		while(not eof(mae)) do begin
 			read(mae,p);
-			while (not eof(mae)) and (v.codigo <> p.codigo) do
-				read(mae,p);
-			if(v.codigo = p.codigo) then begin
-				seek(filepos(mae)-1);
-				p.stockAct:= p.stockAct - v.cantU;
+			totalV:= 0;
+			while(not eof(det)) do begin
+				read(det,p);
+				if(v.codigo = p.codigo) then
+					totalV:= totalV + v.cantU;
+			end;
+			seek(det,0);
+			if(totalV > 0) then begin
+				p.stockAct:= p.stockAct - totalV;
+				seek(mae,filepos(mae)-1);
 				write(mae,p);
-			end
-			leer(det,v);
+			end;
 		end;
 		close(mae);
-		close(det);
-		writeln('archivo maestro actualizado con exito');
-	end;	
+		close(det);			
+	end;
+	
+	//en el punto B no es necesario agrupar y sumar los datos ya que solamente aparecen 1 o 0 veces, entonces directamente
+	//lees y actualizas el maestro.
+		
 var
-
+	mae: maestro;
+	det: detalle;
 begin
-
+	crearDetalle(det);
+	crearMaestro(mae);
+	actualizarMaestroIncisoA(mae,det);
 end.	
 	
