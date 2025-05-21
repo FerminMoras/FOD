@@ -14,7 +14,7 @@ type
 		v: votos;
 	begin
 		assign(t,'archivo.txt');
-		reset(t):
+		reset(t);
 		assign(arc,'archivo.dat');
 		rewrite(arc);
 		while(not eof(t)) do begin
@@ -31,9 +31,9 @@ type
 		v,aux:votos;
 		ok: boolean;
 	begin
-		reset(mae);
-		assign(aux,'archivoAux.dat');
-		rewrite(aux);
+		reset(arc);
+		assign(arcAux,'archivoAux.dat');
+		rewrite(arcAux);
 		cantTotal:= 0;
 		while(not eof(arc)) do begin
 			read(arc,v);
@@ -41,13 +41,13 @@ type
 			seek(arcAux,0);
 			while(not eof(arcAux)) and (not ok) do begin
 				read(arcAux,aux);
-				if(aux.codigo = l.codigo) then
+				if(aux.codigo = v.codigo) then
 					ok:= true;
 			end;
 			
 			if (ok) then begin
-				aux.votos:= aux.votos + v.votos;
-				seek(arcAux, filepos(aux)-1);
+				aux.cantV:= aux.cantV + v.cantV;
+				seek(arcAux, filepos(arcAux)-1);
 				write(arcAux,aux);
 			end
 			else
@@ -66,7 +66,7 @@ type
 		writeln('Codigo localidad                       Total votos');
 		while (not eof(arc)) do begin
 			read(arc,v);
-			writeln(l.codigo,'                           ', l.votos);
+			writeln(v.codigo,'                           ', v.cantV);
 		end;
 		writeln('Total general de votos: ', cantTotal);
 	end;		

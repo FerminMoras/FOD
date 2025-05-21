@@ -28,7 +28,7 @@ type
 		rewrite(mae);
 		
 		while(not eof(t)) do begin
-			readln(t, p.cod, p.nombre, p.precio, p.stockAct, p.stockMin);
+			readln(t, p.codigo, p.nombre, p.precio, p.stockAct, p.stockMin);
 			write(mae,p);
 		end;
 		
@@ -49,7 +49,7 @@ type
 		rewrite(det);
 		
 		while(not eof(t)) do begin
-			readln(t, v.cod, v.cantU);
+			readln(t, v.codigo, v.cantU);
 			write(det,v);
 		end;
 		
@@ -71,7 +71,7 @@ type
 			read(mae,p);
 			totalV:= 0;
 			while(not eof(det)) do begin
-				read(det,p);
+				read(det,v);
 				if(v.codigo = p.codigo) then
 					totalV:= totalV + v.cantU;
 			end;
