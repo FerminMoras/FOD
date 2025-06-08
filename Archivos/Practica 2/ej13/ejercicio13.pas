@@ -114,3 +114,11 @@ begin
 	actualizarMaestro(mae,det);
 	generarTxt(mae);
 end.
+
+{El inciso B lo que se tendria que hacer en el procedimiento donde
+actualizo el maestro es, crear una variable auxiliar text, asignarle
+un nombre y crear ese archivo .txt con un rewrite, lo siguiente
+seria, cada vez que actualizo un numero de usuario y lo guardo en el
+maestro, ahi deberiamso escribirlo (write) en el archivo .txt.
+entonces cuando finaliza el procedimiento te queda el maestro 
+actualizo y el .txt generado.}
