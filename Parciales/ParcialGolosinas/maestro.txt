@@ -1,0 +1,9 @@
+1 20 3 1000.0 chupaleta
+2 20 3 2000.0 lenguetazo
+3 20 3 1000.0 marroc
+4 20 3 500.0 ferrero rocher
+5 20 3 100.0 alfajor milka
+6 20 3 800.0 chocolate coffler
+7 20 3 300.0 bananita dolca
+8 20 3 400.0 cocacola
+9 20 3 1000.0 sprite

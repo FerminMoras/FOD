@@ -1,7 +1,7 @@
 Program parcialGolosinas;
 const
 	valorAlto = 9999;
-	dF = 20;
+	dF = 3;
 type
 	reg_maestro = record
 		codigo: integer;
@@ -26,22 +26,74 @@ type
 		if(not eof(det)) then
 			read(det,d)
 		else
-			d.codigo:= valorAlto;
+			d.codigo:= valorAlto;	
 	end;
 	
 	procedure minimo(var vD: vecDetalles; var vR: vecRegistros; var min: reg_detalle);
 	var
 		pos,i: integer;
 	begin
+		min.codigo:= valorAlto;
 		for i:= 1 to dF do begin
 			if (vR[i].codigo < min.codigo) then begin
 				min:= vR[i];
 				pos:= i;
 			end;
 		end;
-		if (min.codigo <> valorAlto) then
+		if (min.codigo <> valorAlto) then begin
 			leer(vD[pos],vR[pos]);
+		end;	
 	end;	
+	
+	procedure unDetalle(var det: detalle);
+	var
+		t: text;
+		regd: reg_detalle;
+		nombre: string;
+	begin
+		writeln('ingrese el nombre del archivo detalle a leer');
+		readln(nombre);
+		assign(t, nombre);
+		reset(t);
+		writeln('ingrese el nombre del archivo detalle binario a crear');
+		readln(nombre);
+		assign(det, nombre);
+		rewrite(det);
+		while(not eof(t)) do begin
+			readln(t, regd.codigo, regd.cantV);
+			write(det,regd);
+		end;
+		close(t);
+		close(det);
+	end;
+	
+	procedure crearDetalles(var v: vecDetalles);
+	var
+		i: integer;
+	begin
+		for i:= 1 to dF do begin
+			unDetalle(v[i]);
+			writeln('archivo detalle ', i, ' creado con exito');
+		end;			
+	end;	
+	
+	procedure crearMaestro(var mae: maestro);
+	var
+		t: text;
+		regm: reg_maestro;
+	begin
+		assign(t, 'maestro.txt');
+		reset(t);
+		assign(mae, 'maestro.dat');
+		rewrite(mae);
+		while(not eof(t)) do begin
+			readln(t, regm.codigo, regm.stockAct, regm.stockMin, regm.precio, regm.nombre);
+			write(mae, regm);
+		end;
+		close(t);
+		close(mae);
+		writeln('El archivo maestro fue creado con exito');	
+	end;
 	
 	procedure actualizarMaestro(var mae: maestro; var vD: vecDetalles);
 	var
@@ -53,9 +105,15 @@ type
 	begin
 		assign(t,'listaProducto.txt');
 		rewrite(t);
+		assign(mae,'maestro.dat');
+		assign(vD[1],'detalle1.dat');
+		assign(vD[2],'detalle2.dat');
+		assign(vD[3],'detalle3.dat');
 		reset(mae);
-		for i:= 1 to dF do 
+		for i:= 1 to dF do begin
 			reset(vD[i]);
+			leer(vD[i],vR[i]);
+		end;	
 		minimo(vD,vR,min);
 		while(min.codigo <> valorAlto) do begin
 			cant:= 0;
@@ -84,5 +142,7 @@ var
 	vD: vecDetalles;
 	mae: maestro;
 begin
+	//crearDetalles(vD);
+	//crearMaestro(mae);
 	actualizarMaestro(mae, vD);
 end.

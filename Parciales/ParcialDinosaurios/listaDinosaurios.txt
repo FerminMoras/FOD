@@ -1,0 +1,4 @@
+1  t-rex 10 metros 285kg ta enojao patagonia
+2  velociraptor 2 metros 75kg es rapido norte
+3  broncosaurio 150 metro 150kg tiene broncoespasmo cordobes
+5  planosaurio 5 metros 2kg es plano planeta
