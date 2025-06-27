@@ -1,0 +1,6 @@
+2 5000 20000.0 misiones
+3 2000 15000.0 buenos aires
+4 7000 30000.0 jujuy
+5 15000 12000.0 cordoba
+7 1000 5000.0 tierra del fuego
+10 20000 23000.0 mendoza
