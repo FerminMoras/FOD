@@ -31,7 +31,7 @@ type
 	vecDetalles = array[1..dF] of detalle;
 	vecRegistros = array[1..dF] of infoDet;
 	
-	procedure leer(var det: detalle; var d: infoDet);
+	procedure leerDetalle(var det: detalle; var d: infoDet);
 	begin
 		if(not eof(det)) then
 			read(det,d)
@@ -39,19 +39,27 @@ type
 			d.codProvincia:= valorAlto;
 	end;
 	
+	procedure leerMaestro(var mae: maestro; var m: infoMae);
+	begin
+		if(not eof(mae)) then
+			read(mae,m)
+		else
+			m.codProvincia:= valorAlto;
+	end;		
+	
 	procedure minimo(var vD: vecDetalles; var vR: vecRegistros; var min: infoDet);
 	var
 		pos,i: integer;
 	begin
 		min.codProvincia:= valorAlto;
 		for i:= 1 to dF do begin
-			if (vR[i] < min.codProvincia) then begin
+			if (vR[i].codProvincia < min.codProvincia) or ((vR[i].codProvincia = min.codProvincia) and (vR[i].codLocalidad < min.codLocalidad)) then begin
 				min:= vR[i];
 				pos:= i;
 			end;
 		end;
-		if (min.codPronvicia <> valorAlto) then
-			leer(vD[pos],vR[pos],min);
+		if (min.codProvincia <> valorAlto) then
+			leerDetalle(vD[pos],vR[pos]);
 	end;
 	
 	procedure unDetalle(var det:detalle);
@@ -102,7 +110,7 @@ type
 		rewrite(mae);
 		while(not eof(t)) do begin
 			readln(t, m.codProvincia, m.codLocalidad, m.sinLuz, m.sinGas, m.deChapa, m.sinAgua, m.sinSanitarios, m.nomProvincia);
-			readln(t, m.nomLocalidad)
+			readln(t, m.nomLocalidad);
 			write(mae, m);
 		end;
 		close(t);
@@ -110,31 +118,6 @@ type
 		writeln('El archivo maestro fue creado con exito');	
 	end;
 	
-	procedure actualizarMaestro(var mae: maestro; var vD: vecDetalles);
-	var
-		vR: vecRegistros;
-		locActual,provActual: integer;
-		conLuz, conAgua, conChapa, conGas, conSanitarios: integer;
-		min: infoDet;
-		regm: infoMae;
-	begin
-		reset(mae);
-		resetear(vD);
-		minimo(vD,vR,min);
-		while(min.codProvincia <> valorAlto) do begin
-			provActual:= min.codProvincia;
-			while(min.codProvincia = provActual) do begin
-				locActual:= min.codLocalidad;
-				if()
-	end;
-	
-	procedure resetear(var vD: vecDetalles);
-	var
-		i:integer;
-	begin
-		for i:= 1 to dF do 
-			reset(vD[i]);
-	end;
 	
 	procedure cerrar(var vD: vecDetalles);
 	var
@@ -144,6 +127,79 @@ type
 			close(vD[i]);
 	end;
 	
-	procedure informar(var mae: maestro);	
+	procedure actualizarMaestro(var mae: maestro; var vD: vecDetalles);
+	var
+		i: integer;
+		vR: vecRegistros;
+		locActual,provActual: integer;
+		conLuz, conAgua, construidas, conGas, conSanitarios: integer;
+		min: infoDet;
+		regm: infoMae;
+	begin
+		reset(mae);
+		for i:= 1 to dF do begin
+			reset(vD[i]);
+			leerDetalle(vD[i],vR[i]);
+		end;
+		minimo(vD,vR,min);
+		while(min.codProvincia <> valorAlto) do begin
+			provActual:= min.codProvincia;
+			while(min.codProvincia = provActual) do begin
+				locActual:= min.codLocalidad;
+				conLuz:= 0;
+				conGas:= 0;
+				conSanitarios:= 0;
+				construidas:= 0;
+				conAgua:= 0;
+				while(min.codProvincia = provActual) and (min.codLocalidad = locActual) do begin
+					conLuz:= conLuz + min.conLuz;
+					conGas:= conGas + min.conGas;
+					conSanitarios:= conSanitarios + min.conSanitarios;
+					construidas:= construidas + min.construidas;
+					conAgua:= conAgua + min.conAgua;
+					minimo(vD,vR,min);
+				end;
+				leerMaestro(mae,regm);
+				while(regm.codprovincia <> valorAlto) and ((regm.codProvincia <> provActual) or (regm.codLocalidad <> locActual)) do
+					leerMaestro(mae,regm);
+				if(regm.codProvincia = provActual) and (regm.codLocalidad = locActual) then begin
+					regm.sinLuz:= regm.sinLuz - conLuz;
+					regm.sinGas:= regm.sinGas - conGas;
+					regm.sinSanitarios:= regm.sinSanitarios - conSanitarios;
+					regm.deChapa:= regm.deChapa - construidas;
+					regm.sinAgua:= regm.sinAgua - conAgua;
+					seek(mae,filepos(mae)-1);
+					write(mae,regm);
+				end;
+			end;
+		end;
+		close(mae);
+		cerrar(vD);
+		writeln('archivo maestro actualizado con exito');			
+	end;
 	
+	procedure informar(var mae: maestro);	
+	var
+		cant: integer;
+		regm: infoMae;
+	begin
+		cant:= 0;
+		reset(mae);
+		while(not eof(mae)) do begin
+			read(mae,regm);
+			writeln('Localidad: ', regm.nomLocalidad, ' Viviendas de chapa: ', regm.deChapa);
+			if(regm.deChapa = 0) then
+				cant:= cant + 1;
+		end;
+		writeln('La cantidad de localidades sin viviendas de chapa son: ', cant);
+	end;
+var
+	mae: maestro;
+	vD: vecDetalles;
+begin
+	crearMaestro(mae);
+	crearDetalles(vD);
+	actualizarMaestro(mae,vD);
+	informar(mae);
+end.
 		

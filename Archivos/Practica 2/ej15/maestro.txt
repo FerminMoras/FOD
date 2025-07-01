@@ -1,0 +1,12 @@
+1 1 3 2 14 3 6 Buenos Aires
+Nueve de Julio
+1 2 50 50 0 50 50 Buenos Aires
+Azul
+3 1 50 50 0 50 50 Cordoba
+General Belgrano
+3 3 50 50 50 50 50 Cordoba
+General Deheza
+5 1 50 50 50 50 50 Santa Fe
+Rosario
+5 3 50 50 50 50 50 Santa Fe
+Santa Fe

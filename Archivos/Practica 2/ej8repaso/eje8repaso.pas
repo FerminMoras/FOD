@@ -71,9 +71,10 @@ type
 	var
 		i: integer;
 	begin
-		for i:= 1 to dF do
+		for i:= 1 to dF do begin
 			unDetalle(vD[i]);
 			writeln('archivo detalle creado con exito');
+		end;	
 	end;		
 	
 	procedure crearMaestro(var mae: maestro);
